@@ -2,49 +2,49 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
-from .models import Client_Type
+from .models import ClientType
 from .models import DelayedEvent
 from .models import EmailTemplateCategory
-from .models import Industry_Type
-from .models import Lead_Source
-from .models import Lead_Status
-from .models import Product_Category
-from .models import lead_Followup_Status
+from .models import IndustryType
+from .models import LeadFollowupStatus
+from .models import LeadSource
+from .models import LeadStatus
+from .models import ProductCategory
 
 
 # Define resources for import/export
 class LeadSourceResource(resources.ModelResource):
     class Meta:
-        model = Lead_Source
+        model = LeadSource
 
 
 class IndustryTypeResource(resources.ModelResource):
     class Meta:
-        model = Industry_Type
+        model = IndustryType
 
 
 class LeadStatusResource(resources.ModelResource):
     class Meta:
-        model = Lead_Status
+        model = LeadStatus
 
 
 class ClientTypeResource(resources.ModelResource):
     class Meta:
-        model = Client_Type
+        model = ClientType
 
 
 class LeadFollowupStatusResource(resources.ModelResource):
     class Meta:
-        model = lead_Followup_Status
+        model = LeadFollowupStatus
 
 
 class ProductCategoryResource(resources.ModelResource):
     class Meta:
-        model = Product_Category
+        model = ProductCategory
 
 
 # Define admin classes with search and filter capabilities
-@admin.register(Lead_Source)
+@admin.register(LeadSource)
 class LeadSourceAdmin(ImportExportModelAdmin):
     resource_class = LeadSourceResource
     list_display = ("source_name",)
@@ -52,7 +52,7 @@ class LeadSourceAdmin(ImportExportModelAdmin):
     list_filter = ("source_name",)
 
 
-@admin.register(Industry_Type)
+@admin.register(IndustryType)
 class IndustryTypeAdmin(ImportExportModelAdmin):
     resource_class = IndustryTypeResource
     list_display = ("industry_name",)
@@ -60,7 +60,7 @@ class IndustryTypeAdmin(ImportExportModelAdmin):
     list_filter = ("industry_name",)
 
 
-@admin.register(Lead_Status)
+@admin.register(LeadStatus)
 class LeadStatusAdmin(ImportExportModelAdmin):
     resource_class = LeadStatusResource
     list_display = ("status_name",)
@@ -68,7 +68,7 @@ class LeadStatusAdmin(ImportExportModelAdmin):
     list_filter = ("status_name",)
 
 
-@admin.register(Client_Type)
+@admin.register(ClientType)
 class ClientTypeAdmin(ImportExportModelAdmin):
     resource_class = ClientTypeResource
     list_display = ("client_type_name",)
@@ -76,7 +76,7 @@ class ClientTypeAdmin(ImportExportModelAdmin):
     list_filter = ("client_type_name",)
 
 
-@admin.register(lead_Followup_Status)
+@admin.register(LeadFollowupStatus)
 class LeadFollowupStatusAdmin(ImportExportModelAdmin):
     resource_class = LeadFollowupStatusResource
     list_display = ("followup_status_name",)
@@ -84,7 +84,7 @@ class LeadFollowupStatusAdmin(ImportExportModelAdmin):
     list_filter = ("followup_status_name",)
 
 
-@admin.register(Product_Category)
+@admin.register(ProductCategory)
 class ProductCategoryAdmin(ImportExportModelAdmin):
     resource_class = ProductCategoryResource
     list_display = ("category_name",)

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 
-from cic.Master.models import Product_Category
+from cic.Master.models import ProductCategory
 
 
 class Products(models.Model):
@@ -9,7 +9,7 @@ class Products(models.Model):
     Product_status = models.BooleanField(default=True)
     Product_Serial_No = models.CharField(max_length=100)
 
-    Product_category = models.ForeignKey(Product_Category, on_delete=models.CASCADE)
+    Product_category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
     Product_image = models.ImageField(upload_to="products/")
 
     Product_Specification = models.TextField()

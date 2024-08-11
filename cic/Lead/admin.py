@@ -34,7 +34,7 @@ class LeadAdmin(ImportExportModelAdmin):
         "primary_email",
         "lead_source",
         "lead_status",
-        "lead_Industry",
+        "lead_industry",
         "client_type",
         "created_at",
     )
@@ -48,7 +48,7 @@ class LeadAdmin(ImportExportModelAdmin):
     list_filter = (
         "lead_source",
         "lead_status",
-        "lead_Industry",
+        "lead_industry",
         "client_type",
         "created_at",
     )

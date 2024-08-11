@@ -2,7 +2,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from cic.Master.models import Industry_Type
+from cic.Master.models import IndustryType
 
 User = get_user_model()
 
@@ -16,7 +16,7 @@ class Organization(models.Model):
     primary_email = models.EmailField(verbose_name="Primary Email")
     website = models.URLField(verbose_name="Website")
     industry = models.ForeignKey(
-        Industry_Type,
+        IndustryType,
         on_delete=models.CASCADE,
         verbose_name="Industry",
     )

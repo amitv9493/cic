@@ -1,6 +1,6 @@
 # Translations for the cic project
 # Copyright (C) 2024 amit patel
-# amit patel <amit-patel@example.com>, 2024.
+# amit patel <amit-patel@cloudconnectcampaign.com>, 2024.
 #
 #, fuzzy
 msgid ""

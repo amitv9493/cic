@@ -11,19 +11,19 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('Master', '0001_initial'),
-        ('Products', '0001_initial'),
+        ('Organization', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='products',
-            name='Product_Assigned_User',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name='organization',
+            name='assigned_to',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Assigned to'),
         ),
         migrations.AddField(
-            model_name='products',
-            name='Product_category',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Master.productcategory'),
+            model_name='organization',
+            name='industry',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Master.industrytype', verbose_name='Industry'),
         ),
     ]
