@@ -21,6 +21,6 @@ app.conf.redbeat_redis_url = "redis://redis:6379/3"
 app.conf.beat_schedule = {
     "check-client-reminders": {
         "task": "cic.email_templates.tasks.process_delayed_events",
-        "schedule": 10,
+        "schedule": 3600,  # 1 hour
     },
 }

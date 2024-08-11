@@ -76,7 +76,7 @@ class LeadAdmin(ImportExportModelAdmin):
                     "lead_location",
                     "lead_source",
                     "lead_status",
-                    "lead_Industry",
+                    "lead_industry",
                     "client_type",
                     "lead_followup_status",
                     "assigned_to",
