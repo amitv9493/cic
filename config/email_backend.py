@@ -1,9 +1,10 @@
-import os
-from django.core.mail.backends.smtp import EmailBackend
+from pathlib import Path
+
 from django.core.mail import EmailMultiAlternatives
-from cic.users.models import User
+from django.core.mail.backends.smtp import EmailBackend
 from django.utils.html import strip_tags
-from typing import Optional
+
+from cic.users.models import User
 
 
 class DynamicEmailBackend(EmailBackend):
@@ -11,7 +12,7 @@ class DynamicEmailBackend(EmailBackend):
         super().__init__(**config, **kwargs)
 
 
-def dynamic_send_email(
+def dynamic_send_email(  # noqa: PLR0913
     subject: str,
     body,
     to: list,
@@ -46,7 +47,7 @@ def dynamic_send_email(
     email.attach_alternative(html_content, "text/html")
     if (attachments := kwargs.get("attachments")) and attachments.all().count() != 0:
         for attachment in attachments.all():
-            _, file_extension = os.path.splitext(attachment.file.name)
+            file_extension = Path(attachment.file.name).suffix
 
             new_filename = f"{attachment.name}{file_extension}"
             email.attach(new_filename, attachment.file.read())

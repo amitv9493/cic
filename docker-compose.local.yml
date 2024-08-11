@@ -44,10 +44,10 @@ services:
   redis:
     image: docker.io/redis:6
     container_name: cic_local_redis
-    
+
     volumes:
       - cic_local_redis_data:/data
-    
+
 
   celeryworker:
     <<: *django

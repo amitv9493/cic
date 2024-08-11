@@ -1,30 +1,50 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+
 from .models import Organization
 
 User = get_user_model()
 
+
 @admin.register(Organization)
 class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ('organization_name', 'primary_phone', 'primary_email', 'industry', 'assigned_to')
-    list_filter = ('industry', 'assigned_to')
-    search_fields = ('organization_name', 'primary_email', 'website')
-    readonly_fields = ('id',)
+    list_display = (
+        "organization_name",
+        "primary_phone",
+        "primary_email",
+        "industry",
+        "assigned_to",
+    )
+    list_filter = ("industry", "assigned_to")
+    search_fields = ("organization_name", "primary_email", "website")
+    readonly_fields = ("id",)
 
     fieldsets = (
-        ('Basic Information', {
-            'fields': ('organization_name', 'industry', 'assigned_to')
-        }),
-        ('Contact Information', {
-            'fields': ('primary_phone', 'primary_email', 'website')
-        }),
-        ('Address Information', {
-            'fields': ('organization_location', 'postal_address'),
-        }),
-        ('Additional Information', {
-            'fields': ('notes',),
-            'classes': ('collapse',)
-        }),
+        (
+            "Basic Information",
+            {
+                "fields": ("organization_name", "industry", "assigned_to"),
+            },
+        ),
+        (
+            "Contact Information",
+            {
+                "fields": ("primary_phone", "primary_email", "website"),
+            },
+        ),
+        (
+            "Address Information",
+            {
+                "fields": ("organization_location", "postal_address"),
+            },
+        ),
+        (
+            "Additional Information",
+            {
+                "fields": ("notes",),
+                "classes": ("collapse",),
+            },
+        ),
     )
 
     def get_queryset(self, request):

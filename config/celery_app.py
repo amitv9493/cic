@@ -15,3 +15,12 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
+
+app.conf.beat_scheduler = "redbeat.RedBeatScheduler"
+app.conf.redbeat_redis_url = "redis://redis:6379/3"
+app.conf.beat_schedule = {
+    "check-client-reminders": {
+        "task": "cic.email_templates.tasks.process_delayed_events",
+        "schedule": 10,
+    },
+}

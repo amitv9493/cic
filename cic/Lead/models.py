@@ -22,10 +22,11 @@ class Lead(models.Model):
 
     lead_source = models.ForeignKey(Lead_Source, on_delete=models.CASCADE)
     lead_status = models.ForeignKey(Lead_Status, on_delete=models.CASCADE)
-    lead_Industry = models.ForeignKey(Lead_Industry, on_delete=models.CASCADE)
+    lead_industry = models.ForeignKey(Lead_Industry, on_delete=models.CASCADE)
     client_type = models.ForeignKey(Client_Type, on_delete=models.CASCADE)
     lead_followup_status = models.ForeignKey(
-        lead_Followup_Status, on_delete=models.CASCADE
+        lead_Followup_Status,
+        on_delete=models.CASCADE,
     )
     products = models.ManyToManyField(Products, blank=True)
     notes = models.TextField()
@@ -37,8 +38,14 @@ class Lead(models.Model):
         blank=True,
     )
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{self.first_name} {self.last_name} {self.lead_status}"

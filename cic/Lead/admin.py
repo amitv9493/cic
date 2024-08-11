@@ -1,14 +1,19 @@
 from datetime import timedelta
+from typing import TYPE_CHECKING
 from typing import Any
+
 from django.contrib import admin
+from django.utils import timezone
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
-from cic.users.models import User
-from .models import Lead
 from cic.email_templates.tasks import send_product_questionaire_email
 from cic.Master.models import DelayedEvent
-from django.utils import timezone
+
+from .models import Lead
+
+if TYPE_CHECKING:
+    from cic.users.models import User
 
 
 # Define the resource for import/export
@@ -18,6 +23,7 @@ class LeadResource(resources.ModelResource):
 
 
 # Define the admin class with search, filter, and fieldsets capabilities
+@admin.register(Lead)
 class LeadAdmin(ImportExportModelAdmin):
     resource_class = LeadResource
     list_display = (
@@ -60,7 +66,7 @@ class LeadAdmin(ImportExportModelAdmin):
                     "mobile_phone",
                     "primary_email",
                     "secondary_email",
-                )
+                ),
             },
         ),
         (
@@ -76,7 +82,7 @@ class LeadAdmin(ImportExportModelAdmin):
                     "assigned_to",
                     "products",
                     "notes",
-                )
+                ),
             },
         ),
         (
@@ -86,7 +92,7 @@ class LeadAdmin(ImportExportModelAdmin):
                     "created_at",
                     "updated_at",
                     "created_by",
-                )
+                ),
             },
         ),
     )
@@ -97,7 +103,7 @@ class LeadAdmin(ImportExportModelAdmin):
         "created_by",
     )
 
-    def save_model(self, request: Any, obj: Lead, form: Any, change: bool) -> None:
+    def save_model(self, request: Any, obj: Lead, form: Any, change) -> None:
         if not change:
             obj.created_by = request.user
 
@@ -134,19 +140,16 @@ class LeadAdmin(ImportExportModelAdmin):
                     form.cleaned_data.get("lead_status").status_name == "Quotation Sent"
                 ):
                     for i in [10, 20, 60, 90]:
+                        subject = f"Reminder to contact client after sending quotation {i} seconds."  # noqa: E501
                         DelayedEvent.objects.create(
                             event_type="user_reminder",
                             data={
                                 "email_data": {
-                                    "subject": f"Reminder to contact client after sending quotation {i} seconds.",
+                                    "subject": subject,
                                     "body": "<h1>Reminder</h1>",
-                                    'to':obj.assigned_to.email
-                                }
+                                    "to": obj.assigned_to.email,
+                                },
                             },
                             due_date=timezone.now() + timedelta(seconds=i),
                         )
-                    # email_user_reminder_to_after_quotation()
         return super().save_model(request, obj, form, change)
-
-
-admin.site.register(Lead, LeadAdmin)

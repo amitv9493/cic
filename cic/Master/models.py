@@ -1,38 +1,43 @@
 from django.db import models
-from django.utils import timezone
+
 
 # Create your models here.
-class Lead_Source(models.Model):
+class LeadSource(models.Model):
     source_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.source_name
 
-class Industry_Type(models.Model):
+
+class IndustryType(models.Model):
     industry_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.industry_name
 
-class Lead_Status(models.Model):
+
+class LeadStatus(models.Model):
     status_name = models.CharField(max_length=100)
 
     def __str__(self):
         return f"{self.status_name}"
 
-class Client_Type(models.Model):
+
+class ClientType(models.Model):
     client_type_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.client_type_name
 
-class lead_Followup_Status(models.Model):
+
+class LeadFollowupStatus(models.Model):
     followup_status_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.followup_status_name
 
-class Product_Category(models.Model):
+
+class ProductCategory(models.Model):
     category_name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -42,7 +47,8 @@ class Product_Category(models.Model):
 class EmailTemplateCategory(models.Model):
     category = models.CharField(max_length=50)
 
-
+    def __str__(self):
+        return self.category
 
 
 class DelayedEvent(models.Model):
@@ -51,10 +57,8 @@ class DelayedEvent(models.Model):
     data = models.JSONField(default=dict)
     is_processed = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.event_type} due on {self.due_date}"
-    
     class Meta:
         ordering = ("-due_date",)
-        
-        
+
+    def __str__(self):
+        return f"{self.event_type} due on {self.due_date}"
