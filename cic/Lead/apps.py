@@ -6,4 +6,4 @@ class LeadConfig(AppConfig):
     name = "cic.Lead"
 
     def ready(self) -> None:
-        pass
+        from . import receiver  # noqa: F401

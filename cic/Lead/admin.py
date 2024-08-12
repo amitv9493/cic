@@ -1,19 +1,15 @@
-from datetime import timedelta
-from typing import TYPE_CHECKING
 from typing import Any
 
 from django.contrib import admin
-from django.utils import timezone
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
 from cic.email_templates.tasks import send_product_questionaire_email
-from cic.Master.models import DelayedEvent
 
+from .models import FollowupTask
 from .models import Lead
-
-if TYPE_CHECKING:
-    from cic.users.models import User
+from .views import create_client_reminder
+from .views import crete_user_reminder
 
 
 # Define the resource for import/export
@@ -110,46 +106,16 @@ class LeadAdmin(ImportExportModelAdmin):
         if change:
             changed_fields = form.changed_data
             if "lead_status" in changed_fields:
-                if (
-                    form.cleaned_data.get("lead_status").status_name
-                    == "Welcome Email Received"
-                ):
+                if form.cleaned_data.get("lead_status").status_name == "Welcome Email Received":
                     send_product_questionaire_email.delay(lead_id=obj.id)
-                    user: User = obj.assigned_to
-                    for i in [2, 4, 8, 12]:
-                        DelayedEvent.objects.create(
-                            event_type="client_reminder",
-                            due_date=timezone.now() + timedelta(seconds=i),
-                            data={
-                                "email_data": {
-                                    "from": user.from_email,
-                                    "subject": f"client reminder after {i} secs",
-                                    "body": "This is a reminder for your reply.",
-                                    "to": [obj.primary_email, obj.secondary_email],
-                                },
-                                "config": {
-                                    "password": user.email_password,
-                                    "Username": user.email_username,
-                                    "port": user.email_port,
-                                    "host": user.email_host,
-                                },
-                            },
-                        )
 
-                elif (
-                    form.cleaned_data.get("lead_status").status_name == "Quotation Sent"
-                ):
-                    for i in [10, 20, 60, 90]:
-                        subject = f"Reminder to contact client after sending quotation {i} seconds."  # noqa: E501
-                        DelayedEvent.objects.create(
-                            event_type="user_reminder",
-                            data={
-                                "email_data": {
-                                    "subject": subject,
-                                    "body": "<h1>Reminder</h1>",
-                                    "to": obj.assigned_to.email,
-                                },
-                            },
-                            due_date=timezone.now() + timedelta(seconds=i),
-                        )
+                    create_client_reminder(user=obj.assigned_to, lead_obj=obj)
+
+                elif form.cleaned_data.get("lead_status").status_name == "Quotation Sent":
+                    crete_user_reminder(lead_obj=obj)
         return super().save_model(request, obj, form, change)
+
+
+@admin.register(FollowupTask)
+class FollowupTaskAdmin(admin.ModelAdmin):
+    pass

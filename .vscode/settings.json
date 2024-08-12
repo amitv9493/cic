@@ -1,0 +1,7 @@
+{
+  "[python]": {
+    "editor.formatOnSave": true
+  },
+  "notebook.defaultFormatter": "charliermarsh.ruff",
+  "python.analysis.autoImportCompletions": true
+}

@@ -1,3 +1,4 @@
-celery -A core.celery worker -l INFO
-celery -A core.celery worker --beat --scheduler redbeat.RedBeatScheduler --loglevel=info
+celery -A config.celery_app worker -l INFO
+celery -A config.celery_app worker --beat --scheduler redbeat.RedBeatScheduler --loglevel=info
 uv pip freeze | uv pip compile - -o requirements.txt
+docker compose -f docker-compose.local.yml run --rm django python manage.py migrate
