@@ -255,7 +255,7 @@ requests==2.32.3
     #   django-anymail
     #   sphinx
 ruff==0.5.7
-setuptools==70.3.0
+setuptools==72.1.0
 six==1.16.0
     # via
     #   asttokens
