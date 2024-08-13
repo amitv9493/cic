@@ -289,7 +289,7 @@ stack-data==0.6.3
     # via ipython
 starlette==0.38.2
     # via sphinx-autobuild
-tablib==3.5.0
+tablib==3.6.1
     # via django-import-export
 tenacity==9.0.0
     # via celery-redbeat
