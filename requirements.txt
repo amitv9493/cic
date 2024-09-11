@@ -347,7 +347,7 @@ vine==5.1.0
     #   kombu
 virtualenv==20.26.3
     # via pre-commit
-watchdog==4.0.2
+watchdog==5.0.2
 watchfiles==0.23.0
     # via sphinx-autobuild
 wcwidth==0.2.13
