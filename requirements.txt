@@ -60,7 +60,7 @@ colorama==0.4.6
 coverage==7.6.1
     # via django-coverage-plugin
 crispy-bootstrap5==2024.2
-cron-descriptor==1.4.3
+cron-descriptor==1.4.5
     # via django-celery-beat
 cryptography==43.0.0
     # via fido2
