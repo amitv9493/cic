@@ -287,7 +287,7 @@ sqlparse==0.5.1
     #   django-debug-toolbar
 stack-data==0.6.3
     # via ipython
-starlette==0.38.2
+starlette==0.39.0
     # via sphinx-autobuild
 tablib==3.6.1
     # via django-import-export
